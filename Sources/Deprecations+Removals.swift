@@ -1,6 +1,9 @@
 import Foundation
 import Dispatch
 
+@available(*, unavailable, renamed: "Never")
+public typealias NoError = Never
+
 // MARK: Unavailable methods in ReactiveSwift 3.0.
 extension Signal {
 	@available(*, unavailable, message:"Use the `Signal.init` that accepts a two-argument generator.")
