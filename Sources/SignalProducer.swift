@@ -1813,34 +1813,34 @@ extension SignalProducer where Error == Never {
 		return lift { $0.timeout(after: interval, raising: error, on: scheduler) }
 	}
 
-	/// Apply a throwable action to every value from `self`, and forward the values
-	/// if the action succeeds. If the action throws an error, the produced `Signal`
-	/// would propagate the failure and terminate.
-	///
-	/// - parameters:
-	///   - action: A throwable closure to perform an arbitrary action on the value.
-	///
-	/// - returns: A producer which forwards the successful values of the given action.
-	public func attempt(_ action: @escaping (Value) throws -> Void) -> SignalProducer<Value, Error> {
-		return self
-			.promoteError(Error.self)
-			.attempt(action)
-	}
-
-	/// Apply a throwable action to every value from `self`, and forward the results
-	/// if the action succeeds. If the action throws an error, the produced `Signal`
-	/// would propagate the failure and terminate.
-	///
-	/// - parameters:
-	///   - action: A throwable closure to perform an arbitrary action on the value, and
-	///             yield a result.
-	///
-	/// - returns: A producer which forwards the successful results of the given action.
-	public func attemptMap<U>(_ action: @escaping (Value) throws -> U) -> SignalProducer<U, Error> {
-		return self
-			.promoteError(Error.self)
-			.attemptMap(action)
-	}
+//	/// Apply a throwable action to every value from `self`, and forward the values
+//	/// if the action succeeds. If the action throws an error, the produced `Signal`
+//	/// would propagate the failure and terminate.
+//	///
+//	/// - parameters:
+//	///   - action: A throwable closure to perform an arbitrary action on the value.
+//	///
+//	/// - returns: A producer which forwards the successful values of the given action.
+//	public func attempt(_ action: @escaping (Value) throws -> Void) -> SignalProducer<Value, Error> {
+//		return self
+//			.promoteError(Error.self)
+//			.attempt(action)
+//	}
+//
+//	/// Apply a throwable action to every value from `self`, and forward the results
+//	/// if the action succeeds. If the action throws an error, the produced `Signal`
+//	/// would propagate the failure and terminate.
+//	///
+//	/// - parameters:
+//	///   - action: A throwable closure to perform an arbitrary action on the value, and
+//	///             yield a result.
+//	///
+//	/// - returns: A producer which forwards the successful results of the given action.
+//	public func attemptMap<U>(_ action: @escaping (Value) throws -> U) -> SignalProducer<U, Error> {
+//		return self
+//			.promoteError(Error.self)
+//			.attemptMap(action)
+//	}
 }
 
 extension SignalProducer where Error == Swift.Error {
