@@ -3104,3 +3104,59 @@ extension SignalProducer where Error == Never, Value == Int {
 		.interval(0..., interval: interval, on: scheduler)
 	}
 }
+
+@available(iOS 15.0, *)
+@available(tvOS 15.0, *)
+@available(watchOS 6.0, *)
+@available(macCatalystApplicationExtension 15.0, *)
+extension SignalProducer {
+	public struct ResultAsyncProducer: AsyncSequence {
+		public typealias Element = Result<Value, Error>
+		public typealias AsyncIterator = Iterator<Element>
+		
+		public func makeAsyncIterator() -> Iterator<Element> {
+			return AsyncIterator()
+		}
+	}
+	
+	public struct Iterator<Element>: AsyncIteratorProtocol {
+		public mutating func next() async -> Element? {
+			guard !Task.isCancelled else {
+				return nil
+			}
+
+			return nil
+		}
+	}
+	
+	public func s() -> ResultAsyncProducer {
+		return ResultAsyncProducer()
+	}
+}
+
+@available(iOS 15.0, *)
+@available(tvOS 15.0, *)
+@available(watchOS 6.0, *)
+@available(macCatalystApplicationExtension 15.0, *)
+extension SignalProducer where Error == Never {
+	public struct AsyncProducer: AsyncSequence {
+		public typealias Element = Value
+		public typealias AsyncIterator = Iterator<Element>
+		
+		public func makeAsyncIterator() -> Iterator<Element> {
+			return Iterator()
+		}
+	}
+	
+	public func s() -> AsyncProducer {
+		return AsyncProducer()
+	}
+}
+
+func f() {
+	let p = SignalProducer<Int, Never>([1, 2, 3])
+	
+	for await x in p.s() {
+		print(x)
+	}
+}
