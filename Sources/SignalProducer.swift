@@ -3129,7 +3129,7 @@ extension SignalProducer {
 		}
 	}
 	
-	public func s() -> ResultAsyncProducer {
+	public func start() -> ResultAsyncProducer {
 		return ResultAsyncProducer()
 	}
 }
@@ -3148,15 +3148,19 @@ extension SignalProducer where Error == Never {
 		}
 	}
 	
-	public func s() -> AsyncProducer {
+	public func start() -> AsyncProducer {
 		return AsyncProducer()
 	}
 }
 
-func f() {
+@available(iOS 15.0, *)
+@available(tvOS 15.0, *)
+@available(watchOS 6.0, *)
+@available(macCatalystApplicationExtension 15.0, *)
+func f() async {
 	let p = SignalProducer<Int, Never>([1, 2, 3])
 	
-	for await x in p.s() {
+	for await x in p.start() {
 		print(x)
 	}
 }
